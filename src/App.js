@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { WelcomeMessage } from "./components/WelcomeMessage";
+
+import { useAuth } from "./context/AuthContext";
 
 function App() {
+  const { setUser } = useAuth();
+
+  let nameInputRef = React.createRef();
+
+  function confirmName() {
+    {/**Here we are able to manage the global user inside AuthContext */}
+    setUser({ name: nameInputRef.current.value });
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Hello word</h1>
+
+      <p>Whats your name?</p>
+      <br />
+      <input type="text" ref={nameInputRef} />
+
+      <button onClick={confirmName}> Confirm name</button>
+
+      {/**Inside WelcomeMessage component, we will recover user from global AuthContext */}
+      <WelcomeMessage />
+
     </div>
   );
 }
